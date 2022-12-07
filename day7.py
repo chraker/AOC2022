@@ -8,7 +8,7 @@ home_dir = '~/'
 
 def part1():
     dir_sizes = calc_dir_sizes()
-    small_dirs = get_dirs_of_size_or_below(dir_sizes, 100000)
+    small_dirs = dict((k, v) for k, v in dir_sizes.items() if v <= 100000)
     return sum(small_dirs.values())
 
 
@@ -16,7 +16,7 @@ def part2():
     dirs = calc_dir_sizes()
     free_space = 70000000 - dirs[home_dir]
     space_to_free = 30000000 - free_space
-    return get_size_of_closest_match(calc_dir_sizes(), space_to_free)
+    return get_size_of_closest_match(dirs, space_to_free)
 
 
 def calc_dir_sizes():
@@ -45,10 +45,6 @@ def calc_dir_sizes():
                     else:
                         dirs[temp_path] = int(o1)
     return dirs
-
-
-def get_dirs_of_size_or_below(dirs, size):
-    return dict((k, v) for k, v in dirs.items() if v <= size)
 
 
 def get_size_of_closest_match(dirs, target):

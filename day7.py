@@ -1,7 +1,9 @@
+import math
 import re
 from textwrap import wrap
 
 command_start = '$'
+home_dir = '~/'
 
 
 def part1():
@@ -12,7 +14,7 @@ def part1():
 
 def part2():
     dirs = calc_dir_sizes()
-    free_space = 70000000 - dirs['//']
+    free_space = 70000000 - dirs[home_dir]
     space_to_free = 30000000 - free_space
     return get_size_of_closest_match(calc_dir_sizes(), space_to_free)
 
@@ -20,7 +22,7 @@ def part2():
 def calc_dir_sizes():
     dirs = {}
     output = open("data-day7.txt", "r").read()
-    current_path = ['/']
+    current_path = [home_dir]
     for line in output.split('\n'):
         if line[0] == command_start:
             params = line[2:].split(' ')
@@ -28,17 +30,16 @@ def calc_dir_sizes():
                 if params[1] == '..':
                     current_path.pop()
                     continue
-                if params[1] == '/':
-                    current_path = ['/']
+                if params[1] == home_dir:
+                    current_path = [home_dir]
                     continue
                 current_path.append(params[1])
-
         else:
             o1, o2 = line.split(' ')
             if o1 != 'dir':
                 temp_path = ""
                 for path in current_path:
-                    temp_path += (path + "/")
+                    temp_path += (path if path is home_dir else (path + "/"))
                     if dirs.get(temp_path):
                         dirs[temp_path] += int(o1)
                     else:
@@ -51,12 +52,9 @@ def get_dirs_of_size_or_below(dirs, size):
 
 
 def get_size_of_closest_match(dirs, target):
-    current_dir_size = -1
+    current_dir_size = math.inf
     for k, v in dirs.items():
         if (v - target) >= 0:
-            if current_dir_size == -1:
+            if v < current_dir_size:
                 current_dir_size = v
-            else:
-                if v < current_dir_size:
-                    current_dir_size = v
     return current_dir_size

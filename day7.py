@@ -1,6 +1,4 @@
 import math
-import re
-from textwrap import wrap
 
 command_start = '$'
 home_dir = '~/'

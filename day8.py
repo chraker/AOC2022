@@ -18,13 +18,13 @@ def parse_trees():
 
 def get_visible_trees(trees):
     visible_trees = 0
-    for row_index, row in enumerate(trees):
-        for column_index, tree in enumerate(row):
-            if row_index == 0 or column_index == 0 or row_index == len(trees) - 1 or column_index == len(
+    for r_i, row in enumerate(trees):
+        for c_i, tree in enumerate(row):
+            if r_i == 0 or c_i == 0 or r_i == len(trees) - 1 or c_i == len(
                     row) - 1:
                 visible_trees += 1
                 continue
-            left, right, top, bottom = directions(column_index, row_index, trees)
+            left, right, top, bottom = directions(c_i, r_i, trees)
             visible = max(left) < tree or max(right) < tree or max(top) < tree or max(bottom) < tree
 
             if visible:
@@ -34,9 +34,9 @@ def get_visible_trees(trees):
 
 def get_top_scenic_score(trees):
     max_score = 0
-    for row_index, row in enumerate(trees):
-        for column_index, tree in enumerate(row):
-            left, right, top, bottom = directions(column_index, row_index, trees)
+    for r_i, row in enumerate(trees):
+        for c_i, tree in enumerate(row):
+            left, right, top, bottom = directions(c_i, r_i, trees)
             score = fov_length(left, tree) * fov_length(right, tree) * fov_length(top, tree) * fov_length(bottom, tree)
 
             if score > max_score:

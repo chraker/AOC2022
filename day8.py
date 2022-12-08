@@ -11,7 +11,7 @@ def parse_trees():
     lines = output.split('\n')
     trees = [[] for _ in range(len(lines))]
     for row_index, row in enumerate(lines):
-        for column_index, tree in enumerate(row):
+        for tree in row:
             trees[row_index].append(tree)
     return trees
 

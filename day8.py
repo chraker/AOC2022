@@ -3,7 +3,7 @@ def part1():
 
 
 def part2():
-    return 0
+    return get_top_scenic_score(parse_trees())
 
 
 def parse_trees():
@@ -24,13 +24,41 @@ def get_visible_trees(trees):
                     row) - 1:
                 visible_trees += 1
                 continue
-            left = row[:column_index]
-            right = row[(column_index + 1):]
-            column = [r[column_index] for r in trees]
-            top = column[:row_index]
-            bottom = column[(row_index + 1):]
+            left, right, top, bottom = directions(column_index, row_index, trees)
             visible = max(left) < tree or max(right) < tree or max(top) < tree or max(bottom) < tree
 
             if visible:
                 visible_trees += 1
     return visible_trees
+
+
+def get_top_scenic_score(trees):
+    max_score = 0
+    for row_index, row in enumerate(trees):
+        for column_index, tree in enumerate(row):
+            left, right, top, bottom = directions(column_index, row_index, trees)
+            score = fov_length(left, tree) * fov_length(right, tree) * fov_length(top, tree) * fov_length(bottom, tree)
+
+            if score > max_score:
+                max_score = score
+    return max_score
+
+
+def directions(column_index, row_index, trees):
+    row = trees[row_index]
+    left_fov = list(reversed(row[:column_index]))
+    right_fov = row[(column_index + 1):]
+    column = [r[column_index] for r in trees]
+    top_fov = list(reversed(column[:row_index]))
+    bottom_fov = column[(row_index + 1):]
+    return bottom_fov, left_fov, right_fov, top_fov
+
+
+def fov_length(fov, tree):
+    score = 0
+    if fov:
+        for t in fov:
+            score += 1
+            if t >= tree:
+                break
+    return score

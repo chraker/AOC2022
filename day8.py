@@ -20,8 +20,7 @@ def get_visible_trees(trees):
     visible_trees = 0
     for r_i, row in enumerate(trees):
         for c_i, tree in enumerate(row):
-            if r_i == 0 or c_i == 0 or r_i == len(trees) - 1 or c_i == len(
-                    row) - 1:
+            if r_i == 0 or c_i == 0 or r_i == len(trees) - 1 or c_i == len(row) - 1:
                 visible_trees += 1
                 continue
             left, right, top, bottom = directions(c_i, r_i, trees)

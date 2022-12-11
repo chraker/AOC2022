@@ -5,7 +5,8 @@ def part1():
 
 
 def part2():
-    return 0
+    history_x = run_instructions_and_get_historic_x_register_values()
+    return draw(history_x)
 
 
 def run_instructions_and_get_historic_x_register_values():
@@ -55,6 +56,19 @@ def get_total_signal_strength(cycles, register_history):
     for cycle in cycles:
         signal_strength += (register_history[cycle - 2] * cycle)
     return signal_strength
+
+
+def draw(history_x):
+    screen = '\n '
+    for cycle in range(0, 239):
+        if not (cycle+1) % 40 and cycle != 0:
+            screen += '\n'
+        x = history_x[cycle] if len(history_x) > cycle else history_x[len(history_x) - 1]
+        if abs(x - ((cycle+1) % 40)) < 2:
+            screen += '#'
+        else:
+            screen += " "
+    return screen
 
 
 if __name__ == '__main__':

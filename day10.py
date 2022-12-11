@@ -1,7 +1,6 @@
 def part1():
     history_x = run_instructions_and_get_historic_x_register_values()
-    signal_strength = get_total_signal_strength([20, 60, 100, 140, 180, 220], history_x)
-    return signal_strength
+    return get_total_signal_strength([20, 60, 100, 140, 180, 220], history_x)
 
 
 def part2():
@@ -21,7 +20,7 @@ def generate_execution_queue(instructions):
     for line in instructions.split('\n'):
         if line == "noop":
             c += 1
-            continue
+            queue.append([c, 0])
         else:
             instruction, value = line.split(' ')
             if instruction == "addx":
@@ -63,11 +62,7 @@ def draw(history_x):
     for cycle in range(0, 239):
         if not (cycle+1) % 40 and cycle != 0:
             screen += '\n'
-        x = history_x[cycle] if len(history_x) > cycle else history_x[len(history_x) - 1]
-        if abs(x - ((cycle+1) % 40)) < 2:
-            screen += '#'
-        else:
-            screen += " "
+        screen += '#' if abs(history_x[cycle] - ((cycle+1) % 40)) < 2 else ' '
     return screen
 
 

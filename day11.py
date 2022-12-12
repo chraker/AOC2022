@@ -56,8 +56,7 @@ def play_round(monkeys):
 
 def get_monkeybusiness(monkeys):
     inspections = sorted(list(map(lambda monkey: monkey.inspections, monkeys)))
-    top1 = inspections.pop()
-    top2 = inspections.pop()
+    top1, top2 = inspections[-2:]
     return top1 * top2
 
 

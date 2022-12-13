@@ -1,7 +1,5 @@
 from queue import PriorityQueue
 
-import numpy as np
-
 
 def part1():
     start_node, end_node, height_map = parse_height_map()
@@ -71,7 +69,6 @@ def get_shortest_paths_from_node(source_node, node_matrix):
     while not pq.empty():
         (_, current_node) = pq.get()
         visited.append(current_node)
-
         for neighbour in node_matrix[current_node[0]][current_node[1]]:
             if neighbour not in visited:
                 old_length = shortest_path[neighbour[0]][neighbour[1]]

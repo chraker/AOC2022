@@ -19,7 +19,7 @@ def part1():
 
 
 def part2():
-    search_width = 4000000
+    search_width = 20
     sensors, beacons = get_sensors_and_beacons()
     scanned = scan_range(sensors, [0, search_width], [0, search_width])
     candidates = set()
@@ -46,12 +46,7 @@ def scan_range(sensors, lx, ly):
     c = 0
     for x in range(xmin, xmax):
         print('{:.1%}'.format(c / (xmax * ymax)))
-        if ymin == ymax:
-            r = scan(sensors, x, ymin)
-            if r:
-                scanned.add(r)
-
-        for y in range(ymin, ymax):
+        for y in range(ymin, ymax) if ymin != ymax else [ymin]:
             c += 1
             r = scan(sensors, x, y)
             if r:
@@ -78,4 +73,5 @@ def get_sensors_and_beacons():
 
 
 if __name__ == '__main__':
+    print(f'Result: {part1()}')
     print(f'Result: {part2()}')
